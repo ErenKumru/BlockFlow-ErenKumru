@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class BlockPart : MonoBehaviour
 {
-    private Cell currentCell = null;
+    public Cell currentCell = null;
+
+    public Vector3 SnapDifference()
+    {
+        Vector3 snapVector = Vector3.zero;
+        snapVector.x = transform.position.x - currentCell.transform.position.x;
+        snapVector.z = transform.position.z - currentCell.transform.position.z;
+        return snapVector;
+    }
 
     public void SetCurrentCell(Cell cell)
     {

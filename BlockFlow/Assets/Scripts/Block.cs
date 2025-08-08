@@ -135,6 +135,13 @@ public class Block : MonoBehaviour
         hasTarget = true;
     }
 
+    public void Snap()
+    {
+        BlockPart part = parts[0];
+        Vector3 snapVector = transform.localPosition - part.SnapDifference();
+        SetTargetPosition(snapVector);
+    }
+
     public void SetKinematic(bool value)
     {
         rigidBody.isKinematic = value;

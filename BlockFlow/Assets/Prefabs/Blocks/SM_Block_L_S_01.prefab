@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cdd74f9be4f941bd0b2a46a5de48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCell: {fileID: 0}
 --- !u!1 &2136047330856750686
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cdd74f9be4f941bd0b2a46a5de48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCell: {fileID: 0}
 --- !u!1 &4597779550666313761
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cdd74f9be4f941bd0b2a46a5de48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCell: {fileID: 0}
 --- !u!1 &7839674176901287847
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +626,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 1
 --- !u!114 &-7556125564669295522
 MonoBehaviour:

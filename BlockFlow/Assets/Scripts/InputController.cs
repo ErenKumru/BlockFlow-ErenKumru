@@ -70,7 +70,10 @@ public class InputController : MonoBehaviour
     private void DeselectBlock()
     {
         if(selectedBlock != null)
+        {
+            selectedBlock.Snap();
             selectedBlock.SetKinematic(true);
+        }
 
         selectedBlock = null;
     }
