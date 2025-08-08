@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 4388006269296641459}
+  col: {fileID: 4411576479854308968}
   initialShift: {x: 0.5, y: 0, z: 0.5}
 --- !u!1001 &3108822767043057975
 PrefabInstance:

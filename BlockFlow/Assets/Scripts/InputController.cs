@@ -13,6 +13,13 @@ public class InputController : MonoBehaviour
     private Vector3 dragOffset;
     private Block selectedBlock;
 
+    private bool canInput = true;
+
+    private void Awake()
+    {
+        BoardController.OnSuccessfulGrind += DisableInput;
+    }
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -43,6 +50,7 @@ public class InputController : MonoBehaviour
 
     private void TrySelectBlock(Vector2 screenPosition)
     {
+        canInput = true;
         ray = mainCamera.ScreenPointToRay(screenPosition);
 
         if(Physics.Raycast(ray, out RaycastHit hit, 100f, blockLayer))
@@ -57,6 +65,9 @@ public class InputController : MonoBehaviour
 
     private void UpdateDrag(Vector2 screenPosition)
     {
+        if(!canInput)
+            return;
+
         ray = mainCamera.ScreenPointToRay(screenPosition);
 
         if(dragPlane.Raycast(ray, out float distance))
@@ -76,5 +87,15 @@ public class InputController : MonoBehaviour
         }
 
         selectedBlock = null;
+    }
+
+    private void DisableInput(Cell cell, Grinder grinder, Block block)
+    {
+        canInput = false;
+    }
+
+    private void OnDestroy()
+    {
+        BoardController.OnSuccessfulGrind -= DisableInput;
     }
 }

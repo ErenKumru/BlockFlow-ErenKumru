@@ -1,25 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
+    public static event Action<Cell, Grinder, Block> OnTryGrind;
+
+    private Vector2Int coordinates;
+
     private BlockPart currentBlockPart = null;
     private List<Grinder> grinders = new List<Grinder>();
 
+    public void Initialize(int x, int y)
+    {
+        coordinates = new Vector2Int(x, y);
+        name = "Cell_" + y + "_" + x;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        //Pair Cell & BlockPart
+        //Cell & BlockPart interaction
         if(other.TryGetComponent(out BlockPart blockPart))
         {
+            //Set pair
             blockPart.SetCurrentCell(this);
             FillCell(blockPart);
-        }
 
-        //Grinder interaction
-        if(grinders != null || grinders.Count > 0)
-        {
-            //TODO: Grinder checks & grinds if possible
+            //Grinder interaction
+            if(grinders != null && grinders.Count > 0)
+            {
+                Block block = blockPart.GetBlock();
+
+                foreach(Grinder grinder in grinders)
+                {
+                    //Matching color
+                    if(grinder.GetColor() == block.GetColor())
+                    {
+                        OnTryGrind?.Invoke(this, grinder, block);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -43,7 +65,12 @@ public class Cell : MonoBehaviour
         grinders.Add(grinder);
     }
 
-    public List<Grinder> GetGrinder()
+    public Vector2Int GetCoordinates()
+    {
+        return coordinates;
+    }
+
+    public List<Grinder> GetGrinders()
     {
         return grinders;
     }

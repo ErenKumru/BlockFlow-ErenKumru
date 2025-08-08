@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
+    public static event Action<Grid, LevelData> OnLevelGenerated;
+
     [Header("Prefabs")]
     [SerializeField] private Cell cellPrefab;
     [SerializeField] private List<Block> blockPrefabs;
@@ -29,7 +31,7 @@ public class LevelGenerator : MonoBehaviour
     {
         blocksDictianory = new Dictionary<string, Block>();
 
-        foreach (Block block in blockPrefabs)
+        foreach(Block block in blockPrefabs)
         {
             blocksDictianory.Add(block.key, block);
         }
@@ -43,6 +45,8 @@ public class LevelGenerator : MonoBehaviour
         SpawnBlocks(levelData);
         SpawnGrinders(levelData, grid);
         SpawnWalls(levelData);
+
+        OnLevelGenerated?.Invoke(grid, levelData);
     }
 
     private Grid GenerateGrid(LevelData levelData)
@@ -54,12 +58,11 @@ public class LevelGenerator : MonoBehaviour
             for(int x = 0; x < levelData.width; x++)
             {
                 Cell cell = Instantiate(cellPrefab, new Vector3(x, 0, y), cellPrefab.transform.rotation, cellParent);
-                cell.name = "Cell_" + y + "_" + x;
+                cell.Initialize(x, y);
                 grid.SetCell(x, y, cell);
             }
         }
 
-        LevelManager.Instance.Grid = grid;
         return grid;
     }
 

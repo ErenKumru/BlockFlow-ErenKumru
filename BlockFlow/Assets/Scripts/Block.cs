@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+    public event Action<Block> OnReadyToGrind;
+
     [Header("KEY")]
     public string key;
 
@@ -30,6 +33,10 @@ public class Block : MonoBehaviour
     private Vector3 targetPosition;
     private bool hasTarget = false;
 
+    private void Awake()
+    {
+        BoardController.OnSuccessfulGrind += PrepareToGrind;
+    }
 
     public void Initialize(BlockSpawnData blockSpawnData)
     {
@@ -103,7 +110,7 @@ public class Block : MonoBehaviour
         hasTarget = false;
     }
 
-    private bool IsPathBlocked(Vector3 position, Vector3 direction, float distance)
+    public bool IsPathBlocked(Vector3 position, Vector3 direction, float distance)
     {
         foreach(BoxCollider boxCollider in shapePartBoxColliders)
         {
@@ -135,16 +142,59 @@ public class Block : MonoBehaviour
         hasTarget = true;
     }
 
-    public void Snap()
+    public void Snap(bool directly = false)
     {
         BlockPart part = parts[0];
         Vector3 snapVector = transform.localPosition - part.SnapDifference();
-        SetTargetPosition(snapVector);
+
+        if(directly)
+            transform.localPosition = snapVector;
+        else
+            SetTargetPosition(snapVector);
     }
 
     public void SetKinematic(bool value)
     {
         rigidBody.isKinematic = value;
+    }
+
+    public Color GetColor()
+    {
+        return color;
+    }
+
+    private void PrepareToGrind(Cell cell, Grinder grinder, Block block)
+    {
+        //Not grind
+        if(block != this)
+        {
+            //Check for ice, if no ice do nothing
+            return;
+        }
+
+        //Grind block
+        foreach(BlockPart blockPart in parts)
+        {
+            Cell partCell = blockPart.GetCurrentCell();
+            partCell.ClearCell();
+            blockPart.SetActive(false);
+        }
+
+        foreach(BoxCollider boxCollider in shapePartBoxColliders)
+        {
+            boxCollider.enabled = false;
+        }
+
+        hasTarget = false;
+        SetKinematic(false);
+        Snap(true);
+
+        OnReadyToGrind?.Invoke(this);
+    }
+
+    private void OnDestroy()
+    {
+        BoardController.OnSuccessfulGrind -= PrepareToGrind;
     }
 
     private enum Restriction

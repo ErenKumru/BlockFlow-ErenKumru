@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class BlockPart : MonoBehaviour
 {
-    public Cell currentCell = null;
+    private Cell currentCell = null;
+    private Block block;
+
+    private void Awake()
+    {
+        block = GetComponentInParent<Block>();
+    }
 
     public Vector3 SnapDifference()
     {
@@ -25,6 +31,11 @@ public class BlockPart : MonoBehaviour
     public Cell GetCurrentCell()
     {
         return currentCell;
+    }
+
+    public Block GetBlock()
+    {
+        return block;
     }
 
     public void SetActive(bool status)

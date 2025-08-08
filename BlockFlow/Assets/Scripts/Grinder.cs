@@ -1,12 +1,13 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Grinder : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private BoxCollider col;
 
     [Header("Runtime Values")]
     [SerializeField] private Vector3 initialShift;
@@ -27,6 +28,21 @@ public class Grinder : MonoBehaviour
         }
 
         ShiftAndRotate(grinderSpawnData);
+    }
+
+    public void Grind(Block block)
+    {
+        //TODO: Particle effect
+        Vector3 difference = transform.position - block.transform.position;
+        difference.y = block.transform.position.y;
+        Vector3 target = block.transform.position - transform.right * difference.magnitude;
+        target.y = block.transform.position.y;
+        block.transform.DOMove(target, 0.8f).OnComplete(() =>
+        {
+            block.OnReadyToGrind -= Grind;
+            Destroy(block.gameObject);
+            SetColliderActive(true);
+        });
     }
 
     private void ShiftAndRotate(GrinderSpawnData grinderSpawnData)
@@ -70,5 +86,15 @@ public class Grinder : MonoBehaviour
     public bool IsVertical()
     {
         return isVertical;
+    }
+
+    public Color GetColor()
+    {
+        return color;
+    }
+
+    public void SetColliderActive(bool status)
+    {
+        col.enabled = status;
     }
 }
