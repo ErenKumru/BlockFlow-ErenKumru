@@ -48,7 +48,7 @@ public class Block : MonoBehaviour
         else if(restriction == Restriction.Vertical)
             verticalArrow.gameObject.SetActive(true);
 
-        foreach (BlockPart blockPart in parts)
+        foreach(BlockPart blockPart in parts)
         {
             blockPart.SetActive(true);
         }
