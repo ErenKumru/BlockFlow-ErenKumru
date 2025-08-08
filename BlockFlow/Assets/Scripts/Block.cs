@@ -14,7 +14,8 @@ public class Block : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private List<BoxCollider> shapePartBoxColliders;
-    //[SerializeField] private SpriteRenderer spriteRenderer; //restriction dislaying arrow as child object, might need its own class
+    [SerializeField] private SpriteRenderer horizontalArrow;
+    [SerializeField] private SpriteRenderer verticalArrow;
 
     [Header("Runtime Values")]
     [SerializeField] private Vector3 initialShift;
@@ -40,9 +41,14 @@ public class Block : MonoBehaviour
         restriction = (Restriction)blockSpawnData.restriction;
 
         meshRenderer.material.color = color;
-        //TODO: show restriction related visuals etc. 
 
-        foreach(BlockPart blockPart in parts)
+        //Display movement arrows
+        if(restriction == Restriction.Horizontal)
+            horizontalArrow.gameObject.SetActive(true);
+        else if(restriction == Restriction.Vertical)
+            verticalArrow.gameObject.SetActive(true);
+
+        foreach (BlockPart blockPart in parts)
         {
             blockPart.SetActive(true);
         }
@@ -106,10 +112,11 @@ public class Block : MonoBehaviour
             Vector3 halfExtents = Vector3.Scale(boxCollider.size * 0.5f, boxCollider.transform.lossyScale);
 
             //If movement blocked for this boxCollider no need to check for the rest, cannot move!
-            if (Physics.BoxCast(stepStart, halfExtents, direction, 
+            if(Physics.BoxCast(stepStart, halfExtents, direction, 
                 out RaycastHit hit, boxCollider.transform.rotation, distance + castMargin, collisionMask))
             {
-                return true;
+                if(!shapePartBoxColliders.Contains((BoxCollider)hit.collider))
+                    return true;
             }
         }
 
@@ -119,6 +126,11 @@ public class Block : MonoBehaviour
 
     public void SetTargetPosition(Vector3 position)
     {
+        if(restriction == Restriction.Horizontal)
+            position.z = rigidBody.position.z;
+        else if(restriction == Restriction.Vertical)
+            position.x = rigidBody.position.x;
+
         targetPosition = position;
         hasTarget = true;
     }
