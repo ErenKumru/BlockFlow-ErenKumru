@@ -54,6 +54,7 @@ public class LevelGenerator : MonoBehaviour
             for(int x = 0; x < levelData.width; x++)
             {
                 Cell cell = Instantiate(cellPrefab, new Vector3(x, 0, y), cellPrefab.transform.rotation, cellParent);
+                cell.name = "Cell_" + y + "_" + x;
                 grid.SetCell(x, y, cell);
             }
         }
