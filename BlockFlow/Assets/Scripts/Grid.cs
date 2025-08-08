@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grid
 {
-    public Cell[,] cells;
+    private Cell[,] cells;
 
     public Grid(int width, int height)
     {
