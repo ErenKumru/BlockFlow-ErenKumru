@@ -18,6 +18,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform cellParent;
     [SerializeField] private Transform blockParent;
     [SerializeField] private Transform grinderParent;
+    [SerializeField] private Transform wallParent;
 
     //Data
     private Dictionary<string, Block> blocksDictianory;
@@ -44,7 +45,7 @@ public class LevelGenerator : MonoBehaviour
         Grid grid = GenerateGrid(levelData);
         SpawnBlocks(levelData, grid);
         SpawnGrinders(levelData, grid);
-        SpawnWalls(levelData);
+        SpawnWalls(levelData, grid);
 
         OnLevelGenerated?.Invoke(grid, levelData);
     }
@@ -106,9 +107,73 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private void SpawnWalls(LevelData levelData)
+    private void SpawnWalls(LevelData levelData, Grid grid)
     {
+        int widthPos = grid.GetWidth() - 1;
+        int heightPos = grid.GetHeight() - 1;
 
+        //Horizontal walls
+        for (int x = 0; x < grid.GetWidth(); x++)
+        {
+            Cell bottomCell = grid.GetCell(x, 0);
+            Cell topCell = grid.GetCell(x, heightPos);
+
+            if(!bottomCell.HasHorizontalGrinder())
+            {
+                GameObject wall = Instantiate(wallPrefab, bottomCell.transform.position, wallPrefab.transform.rotation, wallParent);
+                wall.transform.Rotate(new Vector3(0, 90, 0));
+                wall.transform.localPosition += Vector3.back * 0.5f;
+            }
+
+            if(!topCell.HasHorizontalGrinder())
+            {
+                GameObject wall = Instantiate(wallPrefab, topCell.transform.position, wallPrefab.transform.rotation, wallParent);
+                wall.transform.Rotate(new Vector3(0, 270, 0));
+                wall.transform.localPosition += Vector3.forward * 0.5f;
+            }
+        }
+
+        //Vertical walls
+        for(int y = 0; y < grid.GetWidth(); y++)
+        {
+            Cell leftCell = grid.GetCell(0, y);
+            Cell rightCell = grid.GetCell(widthPos, y);
+
+            if(!leftCell.HasVerticalGrinder())
+            {
+                GameObject wall = Instantiate(wallPrefab, leftCell.transform.position, wallPrefab.transform.rotation, wallParent);
+                wall.transform.Rotate(new Vector3(0, 180, 0));
+                wall.transform.localPosition += Vector3.left * 0.5f;
+            }
+
+            if(!rightCell.HasVerticalGrinder())
+            {
+                GameObject wall = Instantiate(wallPrefab, rightCell.transform.position, wallPrefab.transform.rotation, wallParent);
+                wall.transform.localPosition += Vector3.right * 0.5f;
+            }
+        }
+
+        //Corner walls
+        Vector3 bottomLeft = new Vector3(-0.5f, 0, -0.5f);
+        Vector3 bottomRight = Vector3.right * widthPos + new Vector3(0.5f, 0, -0.5f);
+        Vector3 topLeft = Vector3.forward * heightPos + new Vector3(-0.5f, 0, 0.5f);
+        Vector3 topRight = new Vector3(widthPos, 0, heightPos) + new Vector3(0.5f, 0 , 0.5f);
+
+        Vector3 rotationBL = Vector3.zero;
+        Vector3 rotationBR = new Vector3(0, -90, 0);
+        Vector3 rotationTL = new Vector3(0, 90, 0);
+        Vector3 rotationTR = new Vector3(0, 180, 0);
+
+        SpawnCorner(bottomLeft, rotationBL);
+        SpawnCorner(bottomRight, rotationBR);
+        SpawnCorner(topLeft, rotationTL);
+        SpawnCorner(topRight, rotationTR);
+    }
+
+    private void SpawnCorner(Vector3 position, Vector3 rotation)
+    {
+        GameObject cornerWall = Instantiate(cornerWallPrefab, position, cornerWallPrefab.transform.rotation, wallParent);
+        cornerWall.transform.Rotate(rotation);
     }
 
     private void OnDestroy()

@@ -70,6 +70,28 @@ public class Cell : MonoBehaviour
         return coordinates;
     }
 
+    public bool HasHorizontalGrinder()
+    {
+        foreach(Grinder grinder in grinders)
+        {
+            if(!grinder.IsVertical())
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool HasVerticalGrinder()
+    {
+        foreach(Grinder grinder in grinders)
+        {
+            if(grinder.IsVertical())
+                return true;
+        }
+
+        return false;
+    }
+
     public List<Grinder> GetGrinders()
     {
         return grinders;

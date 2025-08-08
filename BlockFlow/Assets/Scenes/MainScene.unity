@@ -170,6 +170,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &272900876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 272900877}
+  m_Layer: 0
+  m_Name: Walls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &272900877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272900876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1768620130}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,11 +565,14 @@ MonoBehaviour:
   - {fileID: 2612565815059608190, guid: cdedec5018525314aae1f7c93b0c3aab, type: 3}
   - {fileID: 7946622540103705096, guid: 5bc9d7526c535f246888c2236193c94f, type: 3}
   - {fileID: 5508924430220853781, guid: 109a850e3d2a86140bfd4cb3cf501236, type: 3}
-  wallPrefab: {fileID: 0}
-  cornerWallPrefab: {fileID: 0}
+  wallPrefab: {fileID: 1447963944310760236, guid: 38182e177eb579842ac9fd6ec125848b,
+    type: 3}
+  cornerWallPrefab: {fileID: 2193051885050763791, guid: 243f8d372032f804c86f5d2e31ce7507,
+    type: 3}
   cellParent: {fileID: 1166848114}
   blockParent: {fileID: 1668514377}
   grinderParent: {fileID: 721508031}
+  wallParent: {fileID: 272900877}
 --- !u!114 &1303370173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,6 +667,7 @@ Transform:
   - {fileID: 1166848114}
   - {fileID: 1668514377}
   - {fileID: 721508031}
+  - {fileID: 272900877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1768620131
