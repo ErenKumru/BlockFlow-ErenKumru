@@ -1,5 +1,58 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3968362388667762017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1198769221332068618}
+  - component: {fileID: 4735868997549330841}
+  m_Layer: 6
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1198769221332068618
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968362388667762017}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5247111846010807976}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4735868997549330841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968362388667762017}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!1 &4063238663022414519
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +253,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Block_Line_S_01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e82e7dd79c9231f4a8195ca13f63fdc7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -211,6 +269,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6653014898107552634}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: e82e7dd79c9231f4a8195ca13f63fdc7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1198769221332068618}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e82e7dd79c9231f4a8195ca13f63fdc7,
         type: 3}
@@ -272,7 +334,15 @@ MonoBehaviour:
   - {fileID: 7754367629719882077}
   meshRenderer: {fileID: 6384504141852974535}
   rigidBody: {fileID: -4695022398845637007}
+  shapePartBoxColliders:
+  - {fileID: 4735868997549330841}
   initialShift: {x: 0.5, y: 0, z: 0}
+  minDistance: 0.01
+  boxCastStep: 0.05
+  castMargin: 0.01
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &5247111846010807976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e82e7dd79c9231f4a8195ca13f63fdc7,
