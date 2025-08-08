@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
+    [Header("Prefabs")]
     [SerializeField] private Cell cellPrefab;
     [SerializeField] private List<Block> blockPrefabs;
+    [SerializeField] private List<Grinder> grinderPrefabs;
+    [SerializeField] private GameObject wallPrefab;
+    [SerializeField] private GameObject cornerWallPrefab;
+
+    [Header("Parents")]
     [SerializeField] private Transform cellParent;
     [SerializeField] private Transform blockParent;
-    //TODO: Add walls and grinders etc.
+    [SerializeField] private Transform grinderParent;
 
+    //Data
     private Dictionary<string, Block> blocksDictianory;
 
     private void Awake()
@@ -32,11 +39,13 @@ public class LevelGenerator : MonoBehaviour
 
     public void GenerateLevel(LevelData levelData)
     {
-        GenerateGrid(levelData);
+        Grid grid = GenerateGrid(levelData);
         SpawnBlocks(levelData);
+        SpawnGrinders(levelData, grid);
+        SpawnWalls(levelData);
     }
 
-    private void GenerateGrid(LevelData levelData)
+    private Grid GenerateGrid(LevelData levelData)
     {
         Grid grid = new Grid(levelData.width, levelData.height);
 
@@ -50,6 +59,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         LevelManager.Instance.Grid = grid;
+        return grid;
     }
 
     private void SpawnBlocks(LevelData levelData)
@@ -62,6 +72,36 @@ public class LevelGenerator : MonoBehaviour
                 block.Initialize(blockSpawnData);
             }
         }
+    }
+
+    private void SpawnGrinders(LevelData levelData, Grid grid)
+    {
+        foreach(GrinderSpawnData grinderSpawnData in levelData.grinderSpawnDatas)
+        {
+            //Spawn grinder
+            int grinderIndex = grinderSpawnData.size - 1;
+            Grinder grinderPrefab = grinderPrefabs[grinderIndex];
+            Grinder grinder = Instantiate(grinderPrefab, new Vector3(grinderSpawnData.x, 0, grinderSpawnData.y), grinderPrefab.transform.rotation, grinderParent);
+            grinder.Initialize(grinderSpawnData);
+
+            //Set grinder to cells
+            Cell cell;
+
+            for(int i = 0; i < grinderSpawnData.size; i++)
+            {
+                if(grinderSpawnData.isVertical)
+                    cell = grid.GetCell(grinderSpawnData.x, grinderSpawnData.y + i);
+                else
+                    cell = grid.GetCell(grinderSpawnData.x + i, grinderSpawnData.y);
+
+                cell.SetGrinder(grinder);
+            }
+        }
+    }
+
+    private void SpawnWalls(LevelData levelData)
+    {
+
     }
 
     private void OnDestroy()

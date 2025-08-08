@@ -5,7 +5,23 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     private BlockPart currentBlockPart = null;
-    //private Grinder grinder = null;
+    private List<Grinder> grinders = new List<Grinder>();
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //Pair Cell & BlockPart
+        if(other.TryGetComponent(out BlockPart blockPart))
+        {
+            blockPart.SetCurrentCell(this);
+            FillCell(blockPart);
+        }
+
+        //Grinder interaction
+        if(grinders != null || grinders.Count > 0)
+        {
+            //TODO: Grinder checks & grinds if possible
+        }
+    }
 
     public void FillCell(BlockPart blockPart)
     {
@@ -22,12 +38,13 @@ public class Cell : MonoBehaviour
         return currentBlockPart;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void SetGrinder(Grinder grinder)
     {
-        if(other.TryGetComponent(out BlockPart blockPart))
-        {
-            blockPart.SetCurrentCell(this);
-            FillCell(blockPart);
-        }
+        grinders.Add(grinder);
+    }
+
+    public List<Grinder> GetGrinder()
+    {
+        return grinders;
     }
 }
