@@ -66,7 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cdd74f9be4f941bd0b2a46a5de48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCell: {fileID: 0}
 --- !u!1 &2474843687325673079
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cdd74f9be4f941bd0b2a46a5de48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCell: {fileID: 0}
 --- !u!1 &4689449193233926342
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cdd74f9be4f941bd0b2a46a5de48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCell: {fileID: 0}
 --- !u!1 &5408427216201007183
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cdd74f9be4f941bd0b2a46a5de48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCell: {fileID: 0}
 --- !u!1 &8462095978743245736
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,6 +601,11 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c718e7c06a1436d40a67e686a041377c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 11916fb9c3a5b1b4c94c82f3855b4b48, type: 2}
     - target: {fileID: 919132149155446097, guid: c718e7c06a1436d40a67e686a041377c,
         type: 3}
       propertyPath: m_Name

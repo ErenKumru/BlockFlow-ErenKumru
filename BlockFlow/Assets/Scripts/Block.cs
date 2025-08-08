@@ -38,7 +38,7 @@ public class Block : MonoBehaviour
         BoardController.OnSuccessfulGrind += PrepareToGrind;
     }
 
-    public void Initialize(BlockSpawnData blockSpawnData)
+    public void Initialize(BlockSpawnData blockSpawnData, Vector3 gridMin, Vector3 gridMax)
     {
         //Shift to actual board position
         rigidBody.position += initialShift;
@@ -48,6 +48,8 @@ public class Block : MonoBehaviour
         restriction = (Restriction)blockSpawnData.restriction;
 
         meshRenderer.material.color = color;
+        meshRenderer.material.SetVector("_ClipMin", new Vector4(gridMin.x, gridMin.y, gridMin.z, 0));
+        meshRenderer.material.SetVector("_ClipMax", new Vector4(gridMax.x, gridMax.y, gridMax.z, 0));
 
         //Display movement arrows
         if(restriction == Restriction.Horizontal)

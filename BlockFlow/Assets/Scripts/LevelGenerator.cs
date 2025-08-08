@@ -42,7 +42,7 @@ public class LevelGenerator : MonoBehaviour
     public void GenerateLevel(LevelData levelData)
     {
         Grid grid = GenerateGrid(levelData);
-        SpawnBlocks(levelData);
+        SpawnBlocks(levelData, grid);
         SpawnGrinders(levelData, grid);
         SpawnWalls(levelData);
 
@@ -66,14 +66,17 @@ public class LevelGenerator : MonoBehaviour
         return grid;
     }
 
-    private void SpawnBlocks(LevelData levelData)
+    private void SpawnBlocks(LevelData levelData, Grid grid)
     {
+        Vector3 gridMin = Vector3.zero - Vector3.one;
+        Vector3 gridMax = new Vector3(grid.GetWidth(), 2, grid.GetHeight());
+
         foreach(BlockSpawnData blockSpawnData in levelData.blockSpawnDatas)
         {
             if(blocksDictianory.TryGetValue(blockSpawnData.key, out Block blockPrefab))
             {
                 Block block = Instantiate(blockPrefab, new Vector3(blockSpawnData.x, 0, blockSpawnData.y), blockPrefab.transform.rotation, blockParent);
-                block.Initialize(blockSpawnData);
+                block.Initialize(blockSpawnData, gridMin, gridMax);
             }
         }
     }
