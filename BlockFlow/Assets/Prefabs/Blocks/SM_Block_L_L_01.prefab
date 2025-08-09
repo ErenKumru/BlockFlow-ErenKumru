@@ -989,7 +989,7 @@ MonoBehaviour:
   ice: {fileID: 6791224656237747848}
   initialShift: {x: 0.5, y: 0, z: 1}
   minDistance: 0.01
-  boxCastStep: 0.05
+  boxCastStep: 0.01
   castMargin: 0.01
   collisionMask:
     serializedVersion: 2
