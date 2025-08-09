@@ -134,7 +134,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         //Vertical walls
-        for(int y = 0; y < grid.GetWidth(); y++)
+        for(int y = 0; y < grid.GetHeight(); y++)
         {
             Cell leftCell = grid.GetCell(0, y);
             Cell rightCell = grid.GetCell(widthPos, y);
