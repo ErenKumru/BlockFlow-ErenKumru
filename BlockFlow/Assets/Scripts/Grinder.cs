@@ -8,6 +8,7 @@ public class Grinder : MonoBehaviour
     [Header("References")]
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private BoxCollider col;
+    [SerializeField] private ParticleSystem dustParticles;
 
     [Header("Runtime Values")]
     [SerializeField] private Vector3 initialShift;
@@ -28,11 +29,15 @@ public class Grinder : MonoBehaviour
         }
 
         ShiftAndRotate(grinderSpawnData);
+
+        ParticleSystem.MainModule mainModule = dustParticles.main;
+        mainModule.startColor = color;
     }
 
     public void Grind(Block block)
     {
-        //TODO: Particle effect
+        dustParticles.Play();
+
         Vector3 difference = transform.position - block.transform.position;
         difference.y = block.transform.position.y;
         Vector3 target = block.transform.position - transform.right * difference.magnitude;
