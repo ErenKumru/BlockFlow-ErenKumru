@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -25,8 +26,15 @@ public class Ice : MonoBehaviour
         count--;
         UpdateCountText();
 
-        if(count == 0)
-            BreakIce();
+        transform.DOKill();
+        transform.DOScale(transform.localScale * 1.25f, 0.25f).OnComplete(() =>
+        {
+            transform.DOScale(Vector3.one, 0.25f).OnComplete(() =>
+            {
+                if(count == 0)
+                    BreakIce();
+            });
+        });
     }
 
     private void UpdateCountText()
@@ -36,6 +44,7 @@ public class Ice : MonoBehaviour
 
     private void BreakIce()
     {
+        transform.DOKill();
         gameObject.SetActive(false);
     }
 
