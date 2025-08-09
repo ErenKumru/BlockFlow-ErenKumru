@@ -37,6 +37,7 @@ public class Block : MonoBehaviour
     private void Awake()
     {
         BoardController.OnSuccessfulGrind += PrepareToGrind;
+        BoardController.OnTimeEnd += DisableBlock;
     }
 
     public void Initialize(BlockSpawnData blockSpawnData, Vector3 gridMin, Vector3 gridMax)
@@ -217,9 +218,15 @@ public class Block : MonoBehaviour
         OnReadyToGrind?.Invoke(this);
     }
 
+    private void DisableBlock()
+    {
+        enabled = false;
+    }
+
     private void OnDestroy()
     {
         BoardController.OnSuccessfulGrind -= PrepareToGrind;
+        BoardController.OnTimeEnd -= DisableBlock;
     }
 
     private enum Restriction
