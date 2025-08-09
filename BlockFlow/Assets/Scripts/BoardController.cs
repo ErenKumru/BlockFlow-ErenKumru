@@ -50,6 +50,7 @@ public class BoardController : MonoBehaviour
         }
 
         //Time ended
+        OnTimeChanged?.Invoke(timeInSeconds);
         OnTimeEnd?.Invoke();
     }
 

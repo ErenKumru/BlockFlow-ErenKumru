@@ -9,14 +9,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private Button nextLevelButton;
+    [SerializeField] private Button reloadButton;
     [SerializeField] private GameObject successPanel;
+    [SerializeField] private GameObject failPanel;
 
     private void Awake()
     {
         LevelGenerator.OnLevelGenerated += UpdateLevelText;
         BoardController.OnTimeChanged += UpdateTimeText;
         BoardController.OnBoardCleared += DisplaySuccessPanel;
+        BoardController.OnTimeEnd += DisplayFailPanel;
         nextLevelButton.onClick.AddListener(SceneManager.Instance.LoadNextLevel);
+        reloadButton.onClick.AddListener(SceneManager.Instance.LoadNextLevel);
     }
 
     private void UpdateLevelText(Grid grid, LevelData levelData)
@@ -37,11 +41,18 @@ public class UIManager : MonoBehaviour
         successPanel.SetActive(true);
     }
 
+    private void DisplayFailPanel()
+    {
+        failPanel.SetActive(true);
+    }
+
     private void OnDestroy()
     {
         LevelGenerator.OnLevelGenerated -= UpdateLevelText;
         BoardController.OnTimeChanged -= UpdateTimeText;
         BoardController.OnBoardCleared -= DisplaySuccessPanel;
+        BoardController.OnTimeEnd -= DisplayFailPanel;
         nextLevelButton.onClick.RemoveAllListeners();
+        reloadButton.onClick.RemoveAllListeners();
     }
 }
