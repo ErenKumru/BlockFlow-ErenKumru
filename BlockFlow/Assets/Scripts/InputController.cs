@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private float dragHeight = 0f; // Fixed Y plane for dragging
-    [SerializeField] private LayerMask blockLayer;  // Layer of draggable blocks
+    [SerializeField] private float dragHeight = 0f; //Fixed Y plane for dragging
 
     private Camera mainCamera;
     private Plane dragPlane;
