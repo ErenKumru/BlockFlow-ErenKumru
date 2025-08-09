@@ -59,6 +59,7 @@ public class Block : MonoBehaviour
 
         foreach(BlockPart blockPart in parts)
         {
+            blockPart.gameObject.layer = LayerMask.NameToLayer("Unselected");
             blockPart.SetActive(true);
         }
     }
@@ -117,11 +118,11 @@ public class Block : MonoBehaviour
         foreach(BoxCollider boxCollider in shapePartBoxColliders)
         {
             Vector3 boxColliderWorldCenter = boxCollider.transform.TransformPoint(boxCollider.center);
-            Vector3 stepStart = position + (boxColliderWorldCenter - rigidBody.position);
+            Vector3 center = position + (boxColliderWorldCenter - rigidBody.position);
             Vector3 halfExtents = Vector3.Scale(boxCollider.size * 0.5f, boxCollider.transform.lossyScale);
 
             //If movement blocked for this boxCollider no need to check for the rest, cannot move!
-            if(Physics.BoxCast(stepStart, halfExtents, direction, 
+            if(Physics.BoxCast(center, halfExtents, direction, 
                 out RaycastHit hit, boxCollider.transform.rotation, distance + castMargin, collisionMask))
             {
                 if(!shapePartBoxColliders.Contains((BoxCollider)hit.collider))
@@ -146,8 +147,7 @@ public class Block : MonoBehaviour
 
     public void Snap(bool directly = false)
     {
-        BlockPart part = parts[0];
-        Vector3 snapVector = transform.localPosition - part.SnapDifference();
+        Vector3 snapVector = GetSnapVector(parts[0]);
 
         if(directly)
             transform.localPosition = snapVector;
@@ -155,8 +155,22 @@ public class Block : MonoBehaviour
             SetTargetPosition(snapVector);
     }
 
+    public Vector3 GetSnapVector(BlockPart part)
+    {
+        Vector3 snapVector = transform.localPosition - part.SnapDifference();
+        return snapVector;
+    }
+
     public void SetKinematic(bool value)
     {
+        foreach(BlockPart part in parts)
+        {
+            if(value)
+                part.gameObject.layer = LayerMask.NameToLayer("Unselected");
+            else
+                part.gameObject.layer = LayerMask.NameToLayer("Default");
+        }
+
         rigidBody.isKinematic = value;
     }
 

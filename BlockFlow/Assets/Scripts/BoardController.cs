@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardController : MonoBehaviour
@@ -28,10 +27,33 @@ public class BoardController : MonoBehaviour
     {
         //Check if blocked
         grinder.SetColliderActive(false);
-        Vector3 direction = grinder.transform.position - block.transform.position;
+        Vector3 snappedPosition = block.GetSnapVector(cell.GetBlockPart());
+        Vector3 direction = grinder.transform.position - snappedPosition;
         direction.y = block.transform.position.y;
-        Vector3 targetPosition = direction.normalized * Mathf.Max(grid.GetWidth(), grid.GetHeight());
-        bool isBlocked = block.IsPathBlocked(targetPosition, direction, targetPosition.magnitude);
+
+        if(grinder.IsVertical())
+            direction.z = 0;
+        else
+            direction.x = 0;
+
+        float movedDistance = 0f;
+        Vector3 stepPosition;
+        float distance = direction.magnitude * 2;
+        bool isBlocked = false;
+
+        while(movedDistance < distance)
+        {
+            float step = Mathf.Min(0.05f, distance - movedDistance);
+            stepPosition = snappedPosition + direction * movedDistance;
+
+            if(block.IsPathBlocked(stepPosition, direction, step))
+            {
+                isBlocked = true;
+                break;
+            }
+
+            movedDistance += step;
+        }
 
         //Actually grind
         if(!isBlocked)
