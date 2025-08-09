@@ -1,6 +1,6 @@
 {
   "levelIndex": 1,
-  "seconds": 30,
+  "seconds": 40,
   "width": 6,
   "height": 8,
   "grinderSpawnDatas": [
@@ -18,12 +18,24 @@
     },
     {
       "x": 0,
+      "y": 0,
+      "size": 1,
+      "isVertical": true,
+      "color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 1.0,
+        "a": 1.0
+      }
+    },
+    {
+      "x": 0,
       "y": 7,
-      "size": 2,
+      "size": 3,
       "isVertical": false,
       "color": {
-        "r": 1.0,
-        "g": 0.0,
+        "r": 0.0,
+        "g": 1.0,
         "b": 0.0,
         "a": 1.0
       }
@@ -32,6 +44,18 @@
       "x": 0,
       "y": 5,
       "size": 3,
+      "isVertical": true,
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      }
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "size": 2,
       "isVertical": true,
       "color": {
         "r": 1.0,
@@ -57,7 +81,7 @@
     {
       "key": "CubeS",
       "x": 0,
-      "y": 1,
+      "y": 0,
       "color": {
         "r": 1.0,
         "g": 0.0,
@@ -72,21 +96,86 @@
       "x": 3,
       "y": 0,
       "color": {
-        "r": 1.0,
+        "r": 0.0,
         "g": 0.0,
-        "b": 0.0,
+        "b": 1.0,
         "a": 1.0
       },
       "restriction": 0,
-      "iceCount": 2
+      "iceCount": 0
     },
     {
       "key": "CubeSL",
-      "x": 3,
+      "x": 2,
       "y": 3,
       "color": {
         "r": 1.0,
         "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "restriction": 0,
+      "iceCount": 6
+    },
+    {
+      "key": "TL",
+      "x": 0,
+      "y": 1,
+      "color": {
+        "r": 0.0,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "restriction": 2,
+      "iceCount": 0
+    },
+    {
+      "key": "LLMirror",
+      "x": 4,
+      "y": 5,
+      "color": {
+        "r": 0.0,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "restriction": 1,
+      "iceCount": 0
+    },
+    {
+      "key": "LS",
+      "x": 0,
+      "y": 3,
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "restriction": 2,
+      "iceCount": 0
+    },
+    {
+      "key": "LineS",
+      "x": 2,
+      "y": 2,
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "restriction": 1,
+      "iceCount": 0
+    },
+    {
+      "key": "LineS",
+      "x": 4,
+      "y": 1,
+      "color": {
+        "r": 1.0,
+        "g": 0.0,
         "b": 0.0,
         "a": 1.0
       },
