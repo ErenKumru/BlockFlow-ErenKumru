@@ -205,9 +205,12 @@ public class Block : MonoBehaviour
 
         foreach(BlockPart blockPart in parts)
         {
-            Cell partCell = blockPart.GetCurrentCell();
-            partCell.ClearCell();
-            blockPart.SetActive(false);
+            if(blockPart != null && blockPart.isActiveAndEnabled)
+            {
+                Cell partCell = blockPart.GetCurrentCell();
+                partCell.ClearCell();
+                blockPart.SetActive(false);
+            }
         }
 
         foreach(BoxCollider boxCollider in shapePartBoxColliders)
