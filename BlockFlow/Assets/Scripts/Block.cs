@@ -158,11 +158,13 @@ public class Block : MonoBehaviour
     public void Snap(bool directly = false)
     {
         Vector3 snapVector = GetSnapVector(parts[0]);
+        SetTargetPosition(snapVector);
+    }
 
-        if(directly)
-            transform.localPosition = snapVector;
-        else
-            SetTargetPosition(snapVector);
+    public void Snap(BlockPart part)
+    {
+        Vector3 snapVector = GetSnapVector(part);
+        transform.localPosition = snapVector;
     }
 
     public Vector3 GetSnapVector(BlockPart part)
@@ -199,6 +201,10 @@ public class Block : MonoBehaviour
         }
 
         //Grind block
+        hasTarget = false;
+        SetKinematic(false);
+        Snap(cell.GetBlockPart());
+
         foreach(BlockPart blockPart in parts)
         {
             Cell partCell = blockPart.GetCurrentCell();
@@ -210,10 +216,6 @@ public class Block : MonoBehaviour
         {
             boxCollider.enabled = false;
         }
-
-        hasTarget = false;
-        SetKinematic(false);
-        Snap(true);
 
         OnReadyToGrind?.Invoke(this);
     }

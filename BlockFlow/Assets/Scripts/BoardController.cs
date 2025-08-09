@@ -43,7 +43,7 @@ public class BoardController : MonoBehaviour
 
         while(movedDistance < distance)
         {
-            float step = Mathf.Min(0.05f, distance - movedDistance);
+            float step = Mathf.Min(0.01f, distance - movedDistance);
             stepPosition = snappedPosition + direction * movedDistance;
 
             if(block.IsPathBlocked(stepPosition, direction, step))
