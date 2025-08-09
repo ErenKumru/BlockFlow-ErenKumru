@@ -36,6 +36,7 @@ public class BoardController : MonoBehaviour
 
         if(blockCount == 0)
         {
+            StopCoroutine(timeCountRoutine);
             OnBoardCleared?.Invoke();
         }
     }
