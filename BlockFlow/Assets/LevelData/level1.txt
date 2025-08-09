@@ -1,6 +1,6 @@
 {
-  "levelIndex": 1,
-  "seconds": 60,
+  "levelIndex": 0,
+  "seconds": 10,
   "width": 6,
   "height": 8,
   "grinderSpawnDatas": [
@@ -35,7 +35,7 @@
       "isVertical": true,
       "color": {
         "r": 1.0,
-        "g": 0.0,
+        "g": 1.0,
         "b": 0.0,
         "a": 1.0
       }
@@ -46,8 +46,8 @@
       "size": 3,
       "isVertical": true,
       "color": {
-        "r": 0.0,
-        "g": 1.0,
+        "r": 1.0,
+        "g": 0.0,
         "b": 0.0,
         "a": 1.0
       }
@@ -57,18 +57,31 @@
     {
       "key": "LL",
       "x": 0,
-      "y": 0,
+      "y": 1,
       "color": {
-        "r": 0.2,
-        "g": 0.5,
-        "b": 1.0,
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.0,
         "a": 1.0
       },
-      "restriction": 1,
+      "restriction": 0,
       "iceCount": 0
     },
     {
       "key": "TL",
+      "x": 3,
+      "y": 0,
+      "color": {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "restriction": 0,
+      "iceCount": 2
+    },
+    {
+      "key": "ZL",
       "x": 3,
       "y": 3,
       "color": {
@@ -77,8 +90,8 @@
         "b": 0.0,
         "a": 1.0
       },
-      "restriction": 2,
-      "iceCount": 1
+      "restriction": 0,
+      "iceCount": 0
     }
   ]
 }
