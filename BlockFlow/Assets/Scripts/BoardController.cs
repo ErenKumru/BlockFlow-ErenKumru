@@ -5,10 +5,15 @@ using UnityEngine;
 public class BoardController : MonoBehaviour
 {
     public static event Action<Cell, Grinder, Block> OnSuccessfulGrind;
+    public static event Action OnTimeEnd;
+    public static event Action OnBoardCleared;
+    public static event Action<int> OnTimeChanged;
 
     private Grid grid;
-    private int timeInSeconds;
     private int currentLevel;
+    private int timeInSeconds;
+    private int blockCount = 0;
+    private Coroutine timeCountRoutine;
 
     private void Awake()
     {
@@ -21,6 +26,31 @@ public class BoardController : MonoBehaviour
         this.grid = grid;
         currentLevel = levelData.levelIndex + 1;
         timeInSeconds = levelData.seconds;
+        blockCount = levelData.blockSpawnDatas.Count;
+        timeCountRoutine = StartCoroutine(CountTime());
+    }
+
+    private void CheckBoardClear()
+    {
+        blockCount--;
+
+        if(blockCount == 0)
+        {
+            OnBoardCleared?.Invoke();
+        }
+    }
+
+    private IEnumerator CountTime()
+    {
+        while(timeInSeconds > 0)
+        {
+            OnTimeChanged?.Invoke(timeInSeconds);
+            yield return new WaitForSeconds(1);
+            timeInSeconds--;
+        }
+
+        //Time ended
+        OnTimeEnd?.Invoke();
     }
 
     private void TryGrind(Cell cell, Grinder grinder, Block block)
@@ -60,6 +90,7 @@ public class BoardController : MonoBehaviour
         {
             block.OnReadyToGrind += grinder.Grind;
             OnSuccessfulGrind?.Invoke(cell, grinder, block);
+            CheckBoardClear();
         }
     }
 

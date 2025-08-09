@@ -1,23 +1,47 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    public static event Action<LevelData> OnGenerateLevel;
-   
-    //TODO: Swap this to make it a HolderSO
-    public List<TextAsset> levels;
+    public static event Action<LevelData> OnLevelRead;
 
-    private LevelData levelData;
+    [SerializeField] private LevelHolderSO levelHolder;
+
+    private LevelData currentLevelData;
     private int currentLevelIndex = 0;
 
-    //TODO: Only for test purposes will be changed later with the level progress system
+    public override void Awake()
+    {
+        base.Awake();
+        BoardController.OnBoardCleared += UpdateCurrentLevelIndex;
+    }
+
     private void Start()
     {
+        ReadLevel();
+    }
+
+    public void ReadLevel()
+    {
         //Read Level Data
-        levelData = JsonUtility.FromJson<LevelData>(levels[currentLevelIndex].text);
-        OnGenerateLevel?.Invoke(levelData);
+        currentLevelData = JsonUtility.FromJson<LevelData>(levelHolder.GetLevel(currentLevelIndex).text);
+        OnLevelRead?.Invoke(currentLevelData);
+    }
+
+    private void UpdateCurrentLevelIndex()
+    {
+        //Circling same levels
+        currentLevelIndex = (currentLevelIndex + 1) % levelHolder.GetLevelCount();
+    }
+
+    public int GetCurrentLevelIndex()
+    {
+        return currentLevelIndex;
+    }
+
+    private void OnDestroy()
+    {
+        BoardController.OnBoardCleared -= UpdateCurrentLevelIndex;
     }
 }

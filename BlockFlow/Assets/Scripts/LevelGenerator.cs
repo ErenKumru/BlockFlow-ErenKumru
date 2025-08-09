@@ -37,7 +37,7 @@ public class LevelGenerator : MonoBehaviour
             blocksDictianory.Add(block.key, block);
         }
 
-        LevelManager.OnGenerateLevel += GenerateLevel;
+        LevelManager.OnLevelRead += GenerateLevel;
     }
 
     public void GenerateLevel(LevelData levelData)
@@ -178,6 +178,6 @@ public class LevelGenerator : MonoBehaviour
 
     private void OnDestroy()
     {
-        LevelManager.OnGenerateLevel -= GenerateLevel;
+        LevelManager.OnLevelRead -= GenerateLevel;
     }
 }
