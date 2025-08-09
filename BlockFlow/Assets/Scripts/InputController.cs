@@ -53,8 +53,11 @@ public class InputController : MonoBehaviour
         canInput = true;
         ray = mainCamera.ScreenPointToRay(screenPosition);
 
-        if(Physics.Raycast(ray, out RaycastHit hit, 100f, blockLayer))
+        if(Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Ice"))
+                return;
+
             if(hit.transform.TryGetComponent(out selectedBlock))
             {
                 dragOffset = hit.point - selectedBlock.transform.localPosition;

@@ -19,6 +19,7 @@ public class Block : MonoBehaviour
     [SerializeField] private List<BoxCollider> shapePartBoxColliders;
     [SerializeField] private SpriteRenderer horizontalArrow;
     [SerializeField] private SpriteRenderer verticalArrow;
+    [SerializeField] private Ice ice;
 
     [Header("Runtime Values")]
     [SerializeField] private Vector3 initialShift;
@@ -61,6 +62,15 @@ public class Block : MonoBehaviour
         {
             blockPart.gameObject.layer = LayerMask.NameToLayer("Unselected");
             blockPart.SetActive(true);
+        }
+
+        //Activate ice
+        if(blockSpawnData.iceCount <= 0)
+            ice.gameObject.SetActive(false);
+        else if(blockSpawnData.iceCount > 0)
+        {
+            ice.Initialize(blockSpawnData.iceCount);
+            ice.gameObject.SetActive(true);
         }
     }
 
