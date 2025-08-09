@@ -195,10 +195,7 @@ public class Block : MonoBehaviour
     {
         //Not grind
         if(block != this)
-        {
-            //Check for ice, if no ice do nothing
             return;
-        }
 
         //Grind block
         hasTarget = false;
